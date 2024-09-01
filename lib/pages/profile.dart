@@ -82,18 +82,20 @@ class Profile extends StatelessWidget {
             color: tdContainer,
             borderRadius: BorderRadius.circular(10)
           ),
-          child: RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: number,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: tdFontColor),
-                ),
-                TextSpan(
-                  text: unit,
-                  style: TextStyle(fontSize: 16, color: tdFontColor),
-                ),
-              ],
+          child: Center(
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: number,
+                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: tdFontColor),
+                  ),
+                  TextSpan(
+                    text: unit,
+                    style: TextStyle(fontSize: 16, color: tdFontColor),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
