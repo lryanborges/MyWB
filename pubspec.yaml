@@ -63,6 +63,7 @@ flutter:
     - assets/icons/profile.svg
     - assets/icons/chat.svg
     - assets/icons/configs.svg
+    - assets/images/
 
   fonts:
     - family: Poppins

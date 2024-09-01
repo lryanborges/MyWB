@@ -6,6 +6,8 @@ class ChatController extends GetxController {
   final messageController = TextEditingController();
 
   void sendMessage(String message) {
-    messages.add(message);
+    if(message.isNotEmpty) {
+      messages.add(message);
+    }
   }
 }

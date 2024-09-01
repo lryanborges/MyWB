@@ -28,11 +28,15 @@ class Chat extends StatelessWidget {
             child: MessageList(controller: controller),
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(30.0),
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              padding: EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
                 color: tdDarkerColor,
+                border: Border.all(
+                  color: tdWhite.withOpacity(0.2),
+                  width: 1
+                ),
                 borderRadius: BorderRadius.circular(10)
               ),
               child: Row(
@@ -43,7 +47,7 @@ class Chat extends StatelessWidget {
                       style: TextStyle(color: tdFontColor),
                       decoration: InputDecoration(
                         hintText: 'Escreva para o WB',
-                        hintStyle: TextStyle(color: tdFontColor.withOpacity(0.4)),
+                        hintStyle: TextStyle(color: tdFontColor.withOpacity(0.2)),
                         border: InputBorder.none
                       ),
                     ),
@@ -55,22 +59,13 @@ class Chat extends StatelessWidget {
                       controller.messageController.clear();
                     },
                     style: ElevatedButton.styleFrom(
-                      
+                      shape: CircleBorder(),
+                      padding: EdgeInsets.all(12),
+                      backgroundColor: tdButton
                     ),
+                    child: Icon(Icons.send, color: tdWhite, size: 20,),
                   ),
                 ],
-              ),
-            ),
-          ),
-          Container(
-            child: ListTile(
-              title: TextField(controller: controller.messageController,),
-              trailing: ElevatedButton(
-                onPressed: () {
-                  controller.sendMessage(controller.messageController.text);
-                  controller.messageController.clear();
-                },
-                child: Text('Enviar'),
               ),
             ),
           ),
