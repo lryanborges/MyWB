@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:my_wb/pages/init/init.dart';
+import 'package:get/get.dart';
+import 'package:my_wb/pages/init.dart';
+import 'package:my_wb/pages/chat.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    GetMaterialApp(
+      initialRoute: '/chat',
+      getPages: [
+        //GetPage(name: '/home', page: () => Init()),
+        GetPage(name: '/chat', page: () => Chat())
+      ]
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
