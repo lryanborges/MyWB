@@ -12,7 +12,7 @@ void main() {
     GetMaterialApp(
       initialRoute: '/login',
       getPages: [
-        //GetPage(name: '/home', page: () => Init()),
+        GetPage(name: '/home', page: () => Init()),
         GetPage(name: '/chat', page: () => Chat()),
         GetPage(name: '/profile', page: () => Profile()),
         GetPage(name: '/login', page: () => Login()),
