@@ -43,7 +43,7 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: tdBG,
-      body: Padding (
+      body: SingleChildScrollView (
         padding: const EdgeInsets.all(40.0),
         child: Center(
           child: Column(
@@ -130,29 +130,34 @@ class Login extends StatelessWidget {
                               ),
                           ),
                           const SizedBox(height: 32.0),
-                          ElevatedButton(
-                            onPressed: () => _login(context),
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
+                          SizedBox(
+                            width: double.infinity,
+                            height: 50.0,
+                            child:ElevatedButton(
+                              onPressed: () => _login(context),
+                              child: Text(
+                                'Login',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                ),
                               ),
-                            ),
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(tdContrastBlue),
-                              foregroundColor: MaterialStateProperty.all(tdFontColor),
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(2.0),
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(tdContrastBlue),
+                                foregroundColor: MaterialStateProperty.all(tdFontColor),
+                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(2.0),
+                                  ),
                                 ),
                               ),
                             ),
-                          )
+                          ),
+
                         ]
                     )
                 ),
-                Spacer(),
+                const SizedBox(height: 110.0),
                 Center(
                   child: GestureDetector(
                     onTap: () {

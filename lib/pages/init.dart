@@ -3,6 +3,7 @@ import 'package:my_wb/constants/colors.dart';
 import 'package:my_wb/widgets/bottomNavBar.dart';
 
 class Init extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +19,7 @@ class Init extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text('Olá User069! Que bom que está aqui!', style: TextStyle(fontSize: 18, color: tdFontColor),),
-            Image.asset('images/hi-robot.png'),
+            Image.asset('assets/images/hi-robot.png'),
             Text('Vamos conversar?', style: TextStyle(fontSize: 18, color: tdFontColor),),
           ],
         ),
