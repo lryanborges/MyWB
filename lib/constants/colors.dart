@@ -9,4 +9,5 @@ const Color tdFontColor = Color(0xFFFCF7F8);
 const Color tdWhite = Color(0xFFFCF7F8);
 const Color tdSelected = Color(0xFF293241);
 const Color tdButton = Color(0xFF98C1D9);
-const Color tdMessageContainer = Color(0xFF3D5A80); 
+const Color tdMessageContainer = Color(0xFF3D5A80);
+const Color tdContrastBlue = Color(0xFF275DAD);
