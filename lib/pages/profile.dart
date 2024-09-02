@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_wb/constants/colors.dart';
 import 'package:my_wb/widgets/bottomNavBar.dart';
 
@@ -51,13 +52,13 @@ class Profile extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildInfoContainer('Peso', '96kg',screenWidth),
-                  _buildInfoContainer('Altura', '1.77m',screenWidth),
-                  _buildInfoContainer('Horas de sono', '7.2h',screenWidth)
+                  _buildInfoContainer('Peso', '96kg',screenWidth, 'weight'),
+                  _buildInfoContainer('Altura', '1.77m',screenWidth, 'height'),
+                  _buildInfoContainer('Sono médio', '7.2h',screenWidth, 'average-sleep')
                 ],
               ),
               const SizedBox(height: 24,),
-              _buildImageContainer('Suas estatisticas', 'images/graph.png',screenWidth, screenHeight),
+              _buildImageContainer('Suas estatisticas', 'assets/images/graph.png',screenWidth, screenHeight, 'statistics'),
             ],
           ),
         ),
@@ -66,7 +67,7 @@ class Profile extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoContainer(String label, String value, double screenWidth) {
+  Widget _buildInfoContainer(String label, String value, double screenWidth, String svgName) {
     final RegExp regExp = RegExp(r'(\d+\.?\d*)'); // Expressão regular para número
     final Match? match = regExp.firstMatch(value);
 
@@ -76,7 +77,25 @@ class Profile extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(label, style: TextStyle(fontSize: screenWidth * 0.045, color: tdFontColor),),
+        SizedBox(
+          width: 100,
+          height: 35,
+          child:Row(
+            mainAxisSize: MainAxisSize.min, // pra manter o row compacto c o conteudo
+            children: [
+              SvgPicture.asset(
+                'assets/icons/${svgName}.svg',
+                width: 32,
+                height: 32,
+                color: tdWhite,
+              ),
+              const SizedBox(width: 4.0),
+              Flexible(
+                child: Text(label, style: TextStyle(fontSize: screenWidth * 0.045, color: tdFontColor, height: 1.0)),
+              ),
+            ],
+          ),
+        ),
         SizedBox(height: screenWidth * 0.02),
         Container(
           width: screenWidth * 0.25,
@@ -84,21 +103,23 @@ class Profile extends StatelessWidget {
           padding: EdgeInsets.all(screenWidth * 0.02),
           decoration: BoxDecoration(
             color: tdContainer,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(4),
           ),
           child: Center(
-            child: RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: number,
-                    style: TextStyle(fontSize: number.length < 3 ? screenWidth * 0.09 : screenWidth * 0.08, fontWeight: FontWeight.bold, color: tdFontColor),
-                  ),
-                  TextSpan(
-                    text: unit,
-                    style: TextStyle(fontSize: screenWidth * 0.045, color: tdFontColor),
-                  ),
-                ],
+            child: Flexible(
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: number,
+                      style: TextStyle(fontSize: number.length < 3 ? screenWidth * 0.09 : screenWidth * 0.08, fontWeight: FontWeight.bold, color: tdFontColor),
+                    ),
+                    TextSpan(
+                      text: unit,
+                      style: TextStyle(fontSize: screenWidth * 0.045, color: tdFontColor),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -107,18 +128,30 @@ class Profile extends StatelessWidget {
     );
   }
 
-  Widget _buildImageContainer(String label, String imagePath, double screenWidth, double screenHeight) {
+  Widget _buildImageContainer(String label, String imagePath, double screenWidth, double screenHeight, String svgName) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(label, style: TextStyle(fontSize: screenWidth * 0.045, color: tdFontColor),),
+        Row(
+          children: [
+            const SizedBox(width: 25.0),
+            SvgPicture.asset(
+              'assets/icons/${svgName}.svg',
+              width: 32,
+              height: 32,
+              color: tdWhite,
+            ),
+            const SizedBox(width: 4.0),
+            Text(label, style: TextStyle(fontSize: screenWidth * 0.045, color: tdFontColor)),
+          ],
+        ),
         SizedBox(height: screenHeight * 0.02),
         Container(
           width: screenWidth * 0.8,
           height: screenHeight * 0.25,
           decoration: BoxDecoration(
             color: tdContainer,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(4),
             image: DecorationImage(
               image: AssetImage(imagePath),
               fit: BoxFit.none,

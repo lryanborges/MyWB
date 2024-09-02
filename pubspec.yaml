@@ -67,6 +67,10 @@ flutter:
     - assets/icons/lock.svg
     - assets/icons/confirm.svg
     - assets/icons/name.svg
+    - assets/icons/weight.svg
+    - assets/icons/height.svg
+    - assets/icons/average-sleep.svg
+    - assets/icons/statistics.svg
     - assets/images/
 
   fonts:
