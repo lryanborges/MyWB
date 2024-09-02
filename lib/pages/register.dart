@@ -2,55 +2,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:my_wb/controllers/registerController.dart';
 
 import '../constants/colors.dart';
 
 class Register extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
-
-  void _register(BuildContext context) {
-    if (_formKey.currentState!.validate()) {
-      print('Name: ${_nameController}');
-      print('Email: ${_emailController.text}');
-      print('Senha: ${_passwordController.text}');
-      print('Confirmar senha: ${_confirmPasswordController.text}');
-      // chamar api de autenticação
-      Navigator.pushNamed(context, '/login');
-    }
-  }
-
-  String? _emailValidator(value) {
-    if (value == null || value.isEmpty) {
-      return 'Por favor, insira seu e-mail';
-    }
-    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-      return 'Insira um e-mail válido';
-    }
-
-    return null;
-  }
-
-  String? _passwordValidator(password) {
-    if (password == null || password.isEmpty) {
-      return 'Por favor, insira sua senha';
-    }
-    return null;
-  }
-
-  String? _confirmPasswordValidator(password) {
-    if (password == null || password.isEmpty) {
-      return 'Por favor, confirme sua senha';
-    }
-
-    if(password != _passwordController.text){
-      return 'As senhas não coincidem';
-    }
-    return null;
-  }
+  final controller = Get.put(RegisterController());
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +22,7 @@ class Register extends StatelessWidget {
               children: [
                 Image.asset('assets/images/robot-giving-heart.png'),
                 Form(
-                    key: _formKey,
+                    key: controller.formKey,
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -78,7 +36,7 @@ class Register extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           TextFormField(
-                            controller: _nameController,
+                            controller: controller.nameController,
                             decoration: InputDecoration(
                               hintText: 'type your name',
                               filled: true,
@@ -103,7 +61,7 @@ class Register extends StatelessWidget {
                           ),
                           const SizedBox(height: 16.0),
                           TextFormField(
-                            controller: _emailController,
+                            controller: controller.emailController,
                             decoration: InputDecoration(
                               hintText: 'type your address e-mail',
                               filled: true,
@@ -125,11 +83,11 @@ class Register extends StatelessWidget {
                               ),
                             ),
                             keyboardType: TextInputType.emailAddress,
-                            validator: _emailValidator,
+                            validator: controller.emailValidator,
                           ),
                           const SizedBox(height: 16.0),
                           TextFormField(
-                            controller: _passwordController,
+                            controller: controller.passwordController,
                             decoration: InputDecoration(
                               hintText: 'type your password',
                               filled: true,
@@ -151,11 +109,11 @@ class Register extends StatelessWidget {
                               ),
                             ),
                             obscureText: true,
-                            validator: _passwordValidator,
+                            validator: controller.passwordValidator,
                           ),
                           const SizedBox(height: 16.0),
                           TextFormField(
-                            controller: _confirmPasswordController,
+                            controller: controller.confirmPasswordController,
                             decoration: InputDecoration(
                               hintText: 'type your password again',
                               filled: true,
@@ -177,14 +135,14 @@ class Register extends StatelessWidget {
                               ),
                             ),
                             obscureText: true,
-                            validator: _confirmPasswordValidator,
+                            validator: controller.confirmPasswordValidator,
                           ),
                           const SizedBox(height: 16.0),
                           SizedBox(
                             width: double.infinity,
                             height: 50.0,
                             child: ElevatedButton(
-                              onPressed: () => _register(context),
+                              onPressed: () => controller.register(context),
                               child: Text(
                                 'Register',
                                 style: TextStyle(

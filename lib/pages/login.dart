@@ -2,42 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:my_wb/pages/profile.dart';
+import 'package:get/get.dart';
+import 'package:my_wb/controllers/loginController.dart';
 
 import '../constants/colors.dart';
 
 class Login extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  void _login(BuildContext context) {
-    if (_formKey.currentState!.validate()) {
-      print('Email: ${_emailController.text}');
-      print('Senha: ${_passwordController.text}');
-      // chamar api de autenticação
-      Navigator.pushNamed(context, '/home');
-    }
-  }
-
-  String? _emailValidator(value) {
-      if (value == null || value.isEmpty) {
-        return 'Por favor, insira seu e-mail';
-      }
-      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-        return 'Insira um e-mail válido';
-      }
-
-      return null;
-  }
-
-  String? _passwordValidator(password) {
-    if (password == null || password.isEmpty) {
-      return 'Por favor, insira sua senha';
-    }
-    return null;
-  }
+  final controller = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +22,7 @@ class Login extends StatelessWidget {
               children: [
                 Image.asset('assets/images/very-happy-robot.png'),
                 Form(
-                    key: _formKey,
+                    key: controller.formKey,
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -66,7 +37,7 @@ class Login extends StatelessWidget {
                           const SizedBox(height: 20),
 
                           TextFormField(
-                            controller: _emailController,
+                            controller: controller.emailController,
                             decoration: InputDecoration(
                               hintText: 'type your address e-mail',
                               filled: true,
@@ -88,11 +59,11 @@ class Login extends StatelessWidget {
                               ),
                             ),
                             keyboardType: TextInputType.emailAddress,
-                            validator: _emailValidator,
+                            validator: controller.emailValidator,
                           ),
                           const SizedBox(height: 24.0),
                           TextFormField(
-                            controller: _passwordController,
+                            controller: controller.passwordController,
                             decoration: InputDecoration(
                               hintText: 'type your password',
                               filled: true,
@@ -114,7 +85,7 @@ class Login extends StatelessWidget {
                               ),
                             ),
                             obscureText: true,
-                            validator: _passwordValidator,
+                            validator: controller.passwordValidator,
                           ),
                           const SizedBox(height: 16.0),
                           const Align(
@@ -134,7 +105,7 @@ class Login extends StatelessWidget {
                             width: double.infinity,
                             height: 50.0,
                             child:ElevatedButton(
-                              onPressed: () => _login(context),
+                              onPressed: () => controller.login(context),
                               child: Text(
                                 'Login',
                                 style: TextStyle(

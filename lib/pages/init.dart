@@ -19,8 +19,11 @@ class Init extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text('Olá User069! Que bom que está aqui!', style: TextStyle(fontSize: 18, color: tdFontColor),),
+            SizedBox(height: 30.0,),
             Image.asset('assets/images/hi-robot.png'),
+            SizedBox(height: 30.0,),
             Text('Vamos conversar?', style: TextStyle(fontSize: 18, color: tdFontColor),),
+            SizedBox(height: 60.0),
           ],
         ),
       ),
