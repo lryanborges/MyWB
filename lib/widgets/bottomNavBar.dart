@@ -9,57 +9,79 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: tdDarkerColor,
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          IconButton(
-            icon: SvgPicture.asset(
-              'assets/icons/profile.svg',
-              width: 24,
-              height: 24,
-              color: controller.currentIndex.value == 0 
-                  ? tdSelected 
-                  : tdWhite,
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, '/profile');
-            },
-          ),
-          Transform.translate(
-            offset: const Offset(0, -30),
-            child: CircleAvatar(
-              radius: 30,
-              backgroundColor: tdAccentColor,
-              child: IconButton(
-                icon: SvgPicture.asset(
-                  'assets/icons/chat.svg',
-                  width: 24,
-                  height: 24,
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          color: tdDarkerColor,
+          //padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                child:Container(
+                  color: controller.currentIndex.value == 0 ? tdSelected : tdDarkerColor,
+                  //padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                  child: IconButton(
+                    icon: SvgPicture.asset(
+                      'assets/icons/profile.svg',
+                      width: 24,
+                      height: 24,
+                      color: tdWhite,
+                    ),
+                    onPressed: () {
+                      controller.onTap(0);
+                      Navigator.pushNamed(context, '/profile');
+                    },
+                  ),
                 ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/chat');
-                },
               ),
-            ), 
+
+              const SizedBox(width: 100),
+
+              Expanded(
+                child: Container(
+                  color: controller.currentIndex.value == 2 ? tdSelected : tdDarkerColor,
+                  child: IconButton(
+                    icon: SvgPicture.asset(
+                      'assets/icons/configs.svg',
+                      width: 32,
+                      height: 32,
+                      color: controller.currentIndex.value == 2
+                          ? tdSelected
+                          : tdWhite,
+                    ),
+                    onPressed: () {
+                      // Adicionar rota depois
+                      controller.onTap(2);
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
-          IconButton(
-            icon: SvgPicture.asset(
-              'assets/icons/configs.svg',
-              width: 24,
-              height: 24,
-              color: controller.currentIndex.value == 2 
-                  ? tdSelected 
-                  : tdWhite,
+        ),
+
+        Positioned(
+          bottom: 20,
+          right: (MediaQuery.of(context).size.width/2) - 40,
+          child: CircleAvatar(
+            radius: 40,
+            backgroundColor: tdAccentColor,
+            child: IconButton(
+              icon: SvgPicture.asset(
+                'assets/icons/chat.svg',
+                width: 42,
+                height: 42,
+              ),
+              onPressed: () {
+                controller.onTap(1);
+                Navigator.pushNamed(context, '/chat');
+              },
             ),
-            onPressed: () {
-              // Adicionar rota depois
-            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
