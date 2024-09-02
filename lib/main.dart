@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_wb/constants/colors.dart';
 import 'package:my_wb/pages/init.dart';
 import 'package:my_wb/pages/chat.dart';
 import 'package:my_wb/pages/login.dart';
