@@ -1,49 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:my_wb/constants/colors.dart';
-import 'package:my_wb/widgets/my_nav_bar.dart';
+import 'package:my_wb/widgets/bottomNavBar.dart';
 
-class Init extends StatefulWidget {
-  final String name;
-
-  const Init({Key? key, required this.name}) : super(key: key);
-
-  @override
-  State<Init> createState() => _InitialPageState();
-}
-
-class _InitialPageState extends State<Init> {
-  int _currentIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-    print('Selected Index: $index');
-  }
-
+class Init extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: tdBG,
-      body: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child:  Text(
-              "Menu",
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-          ),
-        ],
+      appBar: AppBar(
+        title: Text('Menu', style: TextStyle(fontSize: 18, color: tdFontColor),),
+        centerTitle: true,
+        backgroundColor: tdBG,
       ),
-      bottomNavigationBar: MyNavBar(
-        currentIndex: _currentIndex, // Atualiza o índice atual
-        onTap: _onItemTapped, // Passa a função de callback
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text('Olá User069! Que bom que está aqui!', style: TextStyle(fontSize: 18, color: tdFontColor),),
+            Image.asset('images/hi-robot.png'),
+            Text('Vamos conversar?', style: TextStyle(fontSize: 18, color: tdFontColor),),
+          ],
+        ),
       ),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 }
