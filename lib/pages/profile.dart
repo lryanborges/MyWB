@@ -36,26 +36,31 @@ class Profile extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 30,),
-          const Center(
-            child: CircleAvatar(radius: 70, backgroundImage: AssetImage('assets/images/pfp_6.jpg'),),
-          ),
-          const SizedBox(height: 16,),
-          const Text('User 069', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: tdFontColor),),
-          const SizedBox(height: 50,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: SingleChildScrollView(
+        child: Container(
+          height: screenHeight,
+          child: Column(
             children: [
-              _buildInfoContainer('Peso', '96kg',screenWidth),
-              _buildInfoContainer('Altura', '1.77m',screenWidth),
-              _buildInfoContainer('Horas de sono', '7.2h',screenWidth)
+              const SizedBox(height: 30,),
+              const Center(
+                child: CircleAvatar(radius: 70, backgroundImage: AssetImage('assets/images/pfp_6.jpg'),),
+              ),
+              const SizedBox(height: 16,),
+              const Text('User 069', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: tdFontColor),),
+              const SizedBox(height: 30,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildInfoContainer('Peso', '96kg',screenWidth),
+                  _buildInfoContainer('Altura', '1.77m',screenWidth),
+                  _buildInfoContainer('Horas de sono', '7.2h',screenWidth)
+                ],
+              ),
+              const SizedBox(height: 24,),
+              _buildImageContainer('Suas estatisticas', 'images/graph.png',screenWidth, screenHeight),
             ],
           ),
-          const SizedBox(height: 24,),
-          _buildImageContainer('Suas estatisticas', 'images/graph.png',screenWidth, screenHeight),
-        ],
+        ),
       ),
       bottomNavigationBar: BottomNavBar(),
     );
