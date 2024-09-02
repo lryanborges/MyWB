@@ -24,16 +24,16 @@ class _MyNavBarState extends State<MyNavBar> {
         BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/icons/profile.svg', // Caminho para o arquivo SVG
-              width: 24,
-              height: 24,
+              width: 30,
+              height: 30,
             ),
             label: ''),
         BottomNavigationBarItem(
             icon: Transform(
-              transform: Matrix4.translationValues(0, -30, 0),
+              transform: Matrix4.translationValues(0, -40, 0),
               child: Container(
-                width: 60,
-                height: 60,
+                width: 80,
+                height: 80,
                 decoration: const BoxDecoration(
                   color: tdAccentColor,
                   shape: BoxShape.circle,
@@ -41,8 +41,8 @@ class _MyNavBarState extends State<MyNavBar> {
                 child: Center(
                   child: SvgPicture.asset(
                     'assets/icons/chat.svg',
-                    width: 24,
-                    height: 24,
+                    width: 30,
+                    height: 30,
                   ),
                 ),
               ),
@@ -51,8 +51,8 @@ class _MyNavBarState extends State<MyNavBar> {
         BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/icons/configs.svg',
-              width: 24,
-              height: 24,
+              width: 30,
+              height: 30,
             ),
             label: '')
       ],

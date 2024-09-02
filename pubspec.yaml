@@ -63,6 +63,10 @@ flutter:
     - assets/icons/profile.svg
     - assets/icons/chat.svg
     - assets/icons/configs.svg
+    - assets/icons/email.svg
+    - assets/icons/lock.svg
+    - assets/icons/confirm.svg
+    - assets/icons/name.svg
     - assets/images/
 
   fonts:
@@ -71,6 +75,10 @@ flutter:
         - asset: assets/fonts/poppins/Poppins-Regular.ttf
         - asset: assets/fonts/poppins/Poppins-Bold.ttf
           weight: 700
+        - asset: assets/fonts/poppins/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/poppins/Poppins-Medium.ttf
+          weight: 500
 
   # To add assets to your application, add an assets section, like this:
   # assets:
