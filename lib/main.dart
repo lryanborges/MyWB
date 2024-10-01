@@ -23,7 +23,7 @@ class MyWBApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       navigatorKey: Get.key,
       title: 'MyWB',
-      initialRoute: Routes.register,
+      initialRoute: Routes.login,
       getPages: AppPages().pages,
     );
   }
