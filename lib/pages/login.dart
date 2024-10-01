@@ -59,7 +59,7 @@ class Login extends StatelessWidget {
                               ),
                             ),
                             keyboardType: TextInputType.emailAddress,
-                            validator: controller.emailValidator,
+                            validator: (email) => controller.validateEmail(email),
                           ),
                           const SizedBox(height: 24.0),
                           TextFormField(
@@ -85,7 +85,7 @@ class Login extends StatelessWidget {
                               ),
                             ),
                             obscureText: true,
-                            validator: controller.passwordValidator,
+                            validator: (senha) => controller.validatePassword(senha),
                           ),
                           const SizedBox(height: 16.0),
                           const Align(
@@ -105,7 +105,7 @@ class Login extends StatelessWidget {
                             width: double.infinity,
                             height: 50.0,
                             child:ElevatedButton(
-                              onPressed: () => controller.login(context),
+                              onPressed: () => controller.handleLogin(),
                               child: Text(
                                 'Login',
                                 style: TextStyle(

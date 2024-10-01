@@ -1,28 +1,30 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_wb/pages/init.dart';
-import 'package:my_wb/pages/chat.dart';
-import 'package:my_wb/pages/login.dart';
-import 'package:my_wb/pages/profile.dart';
-import 'package:my_wb/pages/register.dart';
+import 'package:my_wb/firebase_options.dart';
+import 'package:my_wb/routes/app_pages.dart';
+import 'package:my_wb/service/firebase_service.dart';
 
-void main() {
-  runApp(
-    GetMaterialApp(
-      initialRoute: '/login',
-      getPages: [
-        GetPage(name: '/home', page: () => Init()),
-        GetPage(name: '/chat', page: () => Chat()),
-        GetPage(name: '/profile', page: () => Profile()),
-        GetPage(name: '/login', page: () => Login()),
-        GetPage(name: '/register', page: () => Register())
-      ],
-      title: 'My Welly Beingjamin',
-      theme: ThemeData(
-        fontFamily: 'Poppins',
-
-      ),
-      debugShowCheckedModeBanner: false,
-    )
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
   );
+  Get.put(FirebaseService());
+  runApp(const MyWBApp());
+}
+
+class MyWBApp extends StatelessWidget {
+  const MyWBApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      navigatorKey: Get.key,
+      title: 'MyWB',
+      initialRoute: Routes.register,
+      getPages: AppPages().pages,
+    );
+  }
 }

@@ -1,52 +1,51 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RegisterController extends GetxController {
 
   final formKey = GlobalKey<FormState>();
-  final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
 
-  void register(BuildContext context) {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future handleRegister() async {
     if (formKey.currentState!.validate()) {
-      print('Name: ${nameController}');
-      print('Email: ${emailController.text}');
-      print('Senha: ${passwordController.text}');
-      print('Confirmar senha: ${confirmPasswordController.text}');
-      // chamar api de autenticação
-      Navigator.pushNamed(context, '/login');
+      try {
+          await _auth.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        Get.snackbar("Sucesso", "Você foi registrado com sucesso!");
+        Future.delayed(const Duration(seconds: 1), () => Get.toNamed("/home"));
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'email-already-in-use') {
+          Get.snackbar("Conta já existe", "A conta informada já existe!");
+        }
+      }
     }
   }
 
-  String? emailValidator(value) {
-    if (value == null || value.isEmpty) {
-      return 'Por favor, insira seu e-mail';
-    }
-    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-      return 'Insira um e-mail válido';
-    }
-
-    return null;
-  }
-
-  String? passwordValidator(password) {
-    if (password == null || password.isEmpty) {
-      return 'Por favor, insira sua senha';
+  String? validatePassword(String? password) {
+    if (GetUtils.isLengthLessThan(password, 8)) {
+      return "A senha deve conter no mínimo 8 caracteres!";
     }
     return null;
   }
 
-  String? confirmPasswordValidator(password) {
-    if (password == null || password.isEmpty) {
-      return 'Por favor, confirme sua senha';
-    }
-
-    if(password != passwordController.text){
-      return 'As senhas não coincidem';
+  String? validadeConfirmPwd(String? confirmPwd) {
+    if (confirmPwd != passwordController.text) {
+      return "O campo deve ter o mesmo valor do campo 'Senha'";
     }
     return null;
   }
 
+  String? validateEmail(String? email) {
+    if (!GetUtils.isEmail(email ?? "")) {
+      return "O email fornecido é inválido";
+    }
+    return null;
+  }
 }

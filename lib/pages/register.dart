@@ -36,31 +36,6 @@ class Register extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           TextFormField(
-                            controller: controller.nameController,
-                            decoration: InputDecoration(
-                              hintText: 'type your name',
-                              filled: true,
-                              fillColor: tdWhite,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(2.0),
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.only(right: 12.0),
-                                child: Container(
-                                  padding: const EdgeInsets.all(10.0),
-                                  decoration: BoxDecoration(
-                                    color: tdContainer,
-                                    borderRadius: BorderRadius.circular(2.0),
-                                  ),
-                                  child: SvgPicture.asset('assets/icons/name.svg', width: 32.0, height: 32.0,),
-                                ),
-                              ),
-                            ),
-                            keyboardType: TextInputType.emailAddress,
-                          ),
-                          const SizedBox(height: 16.0),
-                          TextFormField(
                             controller: controller.emailController,
                             decoration: InputDecoration(
                               hintText: 'type your address e-mail',
@@ -83,7 +58,7 @@ class Register extends StatelessWidget {
                               ),
                             ),
                             keyboardType: TextInputType.emailAddress,
-                            validator: controller.emailValidator,
+                            validator: (email) => controller.validateEmail(email),
                           ),
                           const SizedBox(height: 16.0),
                           TextFormField(
@@ -109,7 +84,7 @@ class Register extends StatelessWidget {
                               ),
                             ),
                             obscureText: true,
-                            validator: controller.passwordValidator,
+                            validator: (senha) => controller.validatePassword(senha),
                           ),
                           const SizedBox(height: 16.0),
                           TextFormField(
@@ -135,14 +110,14 @@ class Register extends StatelessWidget {
                               ),
                             ),
                             obscureText: true,
-                            validator: controller.confirmPasswordValidator,
+                            validator: (senha) => controller.validadeConfirmPwd(senha),
                           ),
                           const SizedBox(height: 16.0),
                           SizedBox(
                             width: double.infinity,
                             height: 50.0,
                             child: ElevatedButton(
-                              onPressed: () => controller.register(context),
+                              onPressed: () => controller.handleRegister(),
                               child: Text(
                                 'Register',
                                 style: TextStyle(

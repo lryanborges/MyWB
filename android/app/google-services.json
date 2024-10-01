@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "214532094600",
+    "project_id": "mywb-dbe4a",
+    "storage_bucket": "mywb-dbe4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214532094600:android:695493278df4c43de57d3d",
+        "android_client_info": {
+          "package_name": "com.example.my_wb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIOjiQrV-eyg2xLc9K0GHIgHVhNuGbIDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
