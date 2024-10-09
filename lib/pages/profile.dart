@@ -50,7 +50,11 @@ class Profile extends StatelessWidget {
               Center(
                 child: CircleAvatar(
                   radius: 70,
-                  backgroundImage: FileImage(controller.selectedImage.value!),
+                  backgroundImage: controller.selectedImage.value != null
+                    ? FileImage(controller.selectedImage.value!)
+                    : const NetworkImage(
+                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRurO8kRj216kjoFZVmlyf2v2eak-uUfukQKQ&s'
+                    ) as ImageProvider,
                 ),
               ),
               const SizedBox(height: 16,),
@@ -82,65 +86,78 @@ class Profile extends StatelessWidget {
   }
 
   Widget _buildInfoContainer(String label, String value, double screenWidth, String svgName) {
-    final RegExp regExp = RegExp(r'(\d+\.?\d*)'); // Expressão regular para número
-    final Match? match = regExp.firstMatch(value);
+  final RegExp regExp = RegExp(r'(\d+\.?\d*)'); // Expressão regular para número
+  final Match? match = regExp.firstMatch(value);
 
-    String number = match != null ? match.group(0) ?? '' : '';
-    String unit = value.replaceFirst(number, '');
+  String number = match != null ? match.group(0) ?? '' : '';
+  String unit = value.replaceFirst(number, '');
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: 100,
-          height: 35,
-          child:Row(
-            mainAxisSize: MainAxisSize.min, // pra manter o row compacto c o conteudo
-            children: [
-              SvgPicture.asset(
-                'assets/icons/$svgName.svg',
-                width: 32,
-                height: 32,
-                color: tdWhite,
-              ),
-              const SizedBox(width: 4.0),
-              Flexible(
-                child: Text(label, style: TextStyle(fontSize: screenWidth * 0.045, color: tdFontColor, height: 1.0)),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: screenWidth * 0.02),
-        Container(
-          width: screenWidth * 0.25,
-          height: screenWidth * 0.25,
-          padding: EdgeInsets.all(screenWidth * 0.02),
-          decoration: BoxDecoration(
-            color: tdContainer,
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: Center(
-            child: Flexible(
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: number,
-                      style: TextStyle(fontSize: number.length < 3 ? screenWidth * 0.09 : screenWidth * 0.08, fontWeight: FontWeight.bold, color: tdFontColor),
-                    ),
-                    TextSpan(
-                      text: unit,
-                      style: TextStyle(fontSize: screenWidth * 0.045, color: tdFontColor),
-                    ),
-                  ],
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      SizedBox(
+        width: 100,
+        height: 35,
+        child: Row(
+          mainAxisSize: MainAxisSize.min, // pra manter o row compacto com o conteúdo
+          children: [
+            SvgPicture.asset(
+              'assets/icons/$svgName.svg',
+              width: 32,
+              height: 32,
+              color: tdWhite,
+            ),
+            const SizedBox(width: 4.0),
+            Expanded(
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: screenWidth * 0.045,
+                  color: tdFontColor,
+                  height: 1.0,
                 ),
               ),
             ),
+          ],
+        ),
+      ),
+      SizedBox(height: screenWidth * 0.02),
+      Container(
+        width: screenWidth * 0.25,
+        height: screenWidth * 0.25,
+        padding: EdgeInsets.all(screenWidth * 0.02),
+        decoration: BoxDecoration(
+          color: tdContainer,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Center(
+          child: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: number,
+                  style: TextStyle(
+                    fontSize: number.length < 3 ? screenWidth * 0.09 : screenWidth * 0.08,
+                    fontWeight: FontWeight.bold,
+                    color: tdFontColor,
+                  ),
+                ),
+                TextSpan(
+                  text: unit,
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.045,
+                    color: tdFontColor,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
+
 
   Widget _buildImageContainer(String label, String imagePath, double screenWidth, double screenHeight, String svgName) {
     return Column(

@@ -20,8 +20,8 @@ class MessageList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                    padding: EdgeInsets.all(12),
+                    margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                         color: tdMessageContainer,
                         borderRadius: BorderRadius.circular(15)),
@@ -29,12 +29,12 @@ class MessageList extends StatelessWidget {
                         maxWidth: MediaQuery.of(context).size.width * 0.7),
                     child: Text(
                       controller.messages[index],
-                      style: TextStyle(color: tdFontColor),
+                      style: const TextStyle(color: tdFontColor),
                     ),
                   ),
-                  const SizedBox(width: 8,),
+                  const SizedBox(width: 0,),
                   Container(
-                    margin: EdgeInsets.only(right: 8),
+                    margin: const EdgeInsets.only(right: 8),
                     child: const CircleAvatar(
                       radius: 16,
                       backgroundImage: AssetImage('assets/images/pfp_6.jpg'),

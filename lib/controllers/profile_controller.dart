@@ -29,10 +29,10 @@ class ProfileController extends GetxController{
   @override
   void onInit() {
     super.onInit();
-    loadData();
+    _loadData();
   }
 
-  Future<void> loadData() async {
+  Future<void> _loadData() async {
     try {
       User? user = _auth.currentUser;
       if(user != null) {

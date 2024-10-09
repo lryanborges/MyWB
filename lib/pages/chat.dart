@@ -14,9 +14,15 @@ class Chat extends StatelessWidget {
     return Scaffold(
       backgroundColor: tdBG,
       appBar: AppBar(
-        title: Text('Falando com Welly Beingjamin', style: TextStyle(color: tdWhite, fontSize: 18)),
+        title: const Text(
+          'Falando com Welly Beingjamin', 
+          style: TextStyle(
+            color: tdWhite, 
+            fontSize: 18
+          )
+        ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: tdWhite,),
+          icon: const Icon(Icons.arrow_back, color: tdWhite,),
           onPressed: () {
             Get.back();
           },
@@ -30,9 +36,9 @@ class Chat extends StatelessWidget {
             child: MessageList(controller: controller),
           ),
           Padding(
-            padding: EdgeInsets.all(30.0),
+            padding: const EdgeInsets.all(30.0),
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
                 color: tdDarkerColor,
                 border: Border.all(
@@ -46,7 +52,7 @@ class Chat extends StatelessWidget {
                   Expanded(
                     child: TextField(
                       controller: controller.messageController,
-                      style: TextStyle(color: tdFontColor),
+                      style: const TextStyle(color: tdFontColor),
                       decoration: InputDecoration(
                         hintText: 'Escreva para o WB',
                         hintStyle: TextStyle(color: tdFontColor.withOpacity(0.2)),
@@ -54,18 +60,18 @@ class Chat extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 8,),
+                  const SizedBox(width: 8,),
                   ElevatedButton(
                     onPressed: () {
                       controller.sendMessage(controller.messageController.text);
                       controller.messageController.clear();
                     },
                     style: ElevatedButton.styleFrom(
-                      shape: CircleBorder(),
-                      padding: EdgeInsets.all(12),
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(12),
                       backgroundColor: tdButton
                     ),
-                    child: Icon(Icons.send, color: tdWhite, size: 20,),
+                    child: const Icon(Icons.send, color: tdWhite, size: 20,),
                   ),
                 ],
               ),
@@ -75,4 +81,6 @@ class Chat extends StatelessWidget {
       ),
     );
   }
+
+  
 }
