@@ -118,13 +118,6 @@ class Register extends StatelessWidget {
                             height: 50.0,
                             child: ElevatedButton(
                               onPressed: () => controller.handleRegister(),
-                              child: Text(
-                                'Register',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 20,
-                                ),
-                              ),
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(tdContrastBlue),
                                 foregroundColor: MaterialStateProperty.all(tdFontColor),
@@ -132,6 +125,13 @@ class Register extends StatelessWidget {
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(2.0),
                                   ),
+                                ),
+                              ),
+                              child: const Text(
+                                'Register',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
                                 ),
                               ),
                             ),
@@ -143,7 +143,7 @@ class Register extends StatelessWidget {
                 Center(
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/login');
+                      Get.toNamed('/login');
                     },
                     child: RichText(
                       text: const TextSpan(

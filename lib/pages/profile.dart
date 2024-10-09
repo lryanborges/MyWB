@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:my_wb/constants/colors.dart';
+import 'package:my_wb/controllers/profile_controller.dart';
 import 'package:my_wb/widgets/bottom_navbar.dart';
 
 class Profile extends StatelessWidget {
@@ -11,6 +12,7 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
+    final controller = Get.put(ProfileController());
 
     return Scaffold(
       backgroundColor: tdBG,
@@ -45,18 +47,28 @@ class Profile extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 30,),
-              const Center(
-                child: CircleAvatar(radius: 70, backgroundImage: AssetImage('assets/images/pfp_6.jpg'),),
+              Center(
+                child: CircleAvatar(
+                  radius: 70,
+                  backgroundImage: FileImage(controller.selectedImage.value!),
+                ),
               ),
               const SizedBox(height: 16,),
-              const Text('User 069', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: tdFontColor),),
+              Text(
+                controller.nameController.text, 
+                style: const TextStyle(
+                  fontSize: 20, 
+                  fontWeight: FontWeight.bold, 
+                  color: tdFontColor
+                ),
+              ), 
               const SizedBox(height: 30,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildInfoContainer('Peso', '96kg',screenWidth, 'weight'),
-                  _buildInfoContainer('Altura', '177cm',screenWidth, 'height'),
-                  _buildInfoContainer('Sono', '7.2h',screenWidth, 'average-sleep')
+                  _buildInfoContainer('Peso', '${controller.weightController.text}kg',screenWidth, 'weight'),
+                  _buildInfoContainer('Altura', '${controller.heightController.text}cm',screenWidth, 'height'),
+                  _buildInfoContainer('Sono', '${controller.sleepController.text}h',screenWidth, 'average-sleep')
                 ],
               ),
               const SizedBox(height: 24,),

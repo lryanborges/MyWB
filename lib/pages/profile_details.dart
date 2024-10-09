@@ -45,10 +45,14 @@ class ProfileDetails extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 // Imagem de perfil
-                const CircleAvatar(
+                Obx(() => CircleAvatar(
                   radius: 60,
-                  backgroundImage: AssetImage('assets/images/pfp_6.jpg'),
-                ),
+                  backgroundImage: controller.selectedImage.value != null
+                    ? FileImage(controller.selectedImage.value!)
+                    : const NetworkImage(
+                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRurO8kRj216kjoFZVmlyf2v2eak-uUfukQKQ&s'
+                    ) as ImageProvider,
+                )),
                 // Botão para mudar imagem de perfil
                 Positioned(
                   child: IconButton(
@@ -57,8 +61,8 @@ class ProfileDetails extends StatelessWidget {
                       color: tdBG,
                       size: 30,
                     ),
-                    onPressed: () {
-                      // TODO Método para trocar imagem
+                    onPressed: () async {
+                      await controller.selecionarImagem();
                     },
                   ),
                 ),
@@ -117,7 +121,7 @@ class ProfileDetails extends StatelessWidget {
                     children: [
                       Expanded(
                         child: textFieldWithIcon(
-                          icon: Icons.monitor_weight,
+                          infoController: controller.weightController,
                           hintText: 'Peso (kg)',
                           svgName: 'weight'
                         ),
@@ -125,7 +129,7 @@ class ProfileDetails extends StatelessWidget {
                       const SizedBox(width: 10,),
                       Expanded(
                         child: textFieldWithIcon(
-                          icon: Icons.height,
+                          infoController: controller.heightController,
                           hintText: 'Altura (m)',
                           svgName: 'height'
                         ),
@@ -136,7 +140,7 @@ class ProfileDetails extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: textFieldWithIcon(
-                      icon: Icons.bedtime,
+                      infoController: controller.sleepController,
                       hintText: 'Sono (h)',
                       svgName: 'average-sleep'
                     ),
@@ -276,8 +280,8 @@ class ProfileDetails extends StatelessWidget {
                           borderRadius: BorderRadius.circular(0)
                         ),
                       ),
-                      onPressed: () {
-                        // TODO ação para o botão de salvar
+                      onPressed: () async {
+                        await controller.saveDatas();
                       },
                       child: const Text(
                         'Salvar',
@@ -295,12 +299,12 @@ class ProfileDetails extends StatelessWidget {
   }
 
   Widget textFieldWithIcon({
-    required IconData icon, 
+    required TextEditingController infoController,
     required String hintText, 
     required String svgName
   }){
     return SizedBox(
-      width: 160,
+      width: 180,
       height: 50, 
       child: Container(
         color: Colors.white, 
@@ -319,6 +323,8 @@ class ProfileDetails extends StatelessWidget {
             ),
             Expanded(
               child: TextField(
+                controller: infoController,
+                keyboardType: TextInputType.number,
                 style: const TextStyle(fontSize: 14),
                 decoration: InputDecoration(
                   hintText: hintText,

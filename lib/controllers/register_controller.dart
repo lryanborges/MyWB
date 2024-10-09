@@ -19,7 +19,7 @@ class RegisterController extends GetxController {
           password: passwordController.text,
         );
         Get.snackbar("Sucesso", "Você foi registrado com sucesso!");
-        Future.delayed(const Duration(seconds: 1), () => Get.toNamed("/home"));
+        Future.delayed(const Duration(seconds: 1), () => Get.toNamed("/profile_details"));
       } on FirebaseAuthException catch (e) {
         if (e.code == 'email-already-in-use') {
           Get.snackbar("Conta já existe", "A conta informada já existe!");
