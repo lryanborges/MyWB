@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:my_wb/constants/colors.dart';
-import 'package:my_wb/widgets/bottomNavBar.dart';
+import 'package:my_wb/widgets/bottom_navbar.dart';
 
 class Profile extends StatelessWidget {
+  const Profile({super.key});
+
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -22,7 +24,7 @@ class Profile extends StatelessWidget {
             child: Icon(Icons.edit),
           ),
           onPressed: () {
-            // Colocar alguma coisa depois
+            Get.toNamed('/profile_details');
           },
         ),
         actions: [
@@ -32,13 +34,13 @@ class Profile extends StatelessWidget {
               child: Icon(Icons.logout, color: Colors.white), // Ícone de logout
             ),
             onPressed: () {
-              // Colocar alguma coisa depois
+              // TODO deslogar
             },
           ),
         ],
       ),
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           height: screenHeight,
           child: Column(
             children: [
@@ -53,8 +55,8 @@ class Profile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _buildInfoContainer('Peso', '96kg',screenWidth, 'weight'),
-                  _buildInfoContainer('Altura', '1.77m',screenWidth, 'height'),
-                  _buildInfoContainer('Sono médio', '7.2h',screenWidth, 'average-sleep')
+                  _buildInfoContainer('Altura', '177cm',screenWidth, 'height'),
+                  _buildInfoContainer('Sono', '7.2h',screenWidth, 'average-sleep')
                 ],
               ),
               const SizedBox(height: 24,),
@@ -63,7 +65,7 @@ class Profile extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: const BottomNavBar(),
     );
   }
 
@@ -84,7 +86,7 @@ class Profile extends StatelessWidget {
             mainAxisSize: MainAxisSize.min, // pra manter o row compacto c o conteudo
             children: [
               SvgPicture.asset(
-                'assets/icons/${svgName}.svg',
+                'assets/icons/$svgName.svg',
                 width: 32,
                 height: 32,
                 color: tdWhite,

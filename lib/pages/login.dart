@@ -1,17 +1,17 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:my_wb/controllers/loginController.dart';
+import 'package:my_wb/controllers/login_controller.dart';
 
 import '../constants/colors.dart';
 
 class Login extends StatelessWidget {
-  final controller = Get.put(LoginController());
+  const Login({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginController());
+    
     return Scaffold(
       backgroundColor: tdBG,
       body: SingleChildScrollView (
@@ -132,7 +132,7 @@ class Login extends StatelessWidget {
                 Center(
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/register');
+                      Get.toNamed('/register');
                     },
                     child: RichText(
                       text: const TextSpan(

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:my_wb/constants/colors.dart';
-import 'package:my_wb/controllers/myNavController.dart';
+import 'package:my_wb/controllers/mynav_controller.dart';
 
 class BottomNavBar extends StatelessWidget {
-  final controller = Get.put(MyNavController());
+  const BottomNavBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(MyNavController());
+    
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -31,7 +33,7 @@ class BottomNavBar extends StatelessWidget {
                     ),
                     onPressed: () {
                       controller.onTap(0);
-                      Navigator.pushNamed(context, '/profile');
+                      Get.toNamed('/profile');
                     },
                   ),
                 ),
@@ -76,7 +78,7 @@ class BottomNavBar extends StatelessWidget {
               ),
               onPressed: () {
                 controller.onTap(1);
-                Navigator.pushNamed(context, '/chat');
+                Get.toNamed('/chat');
               },
             ),
           ),

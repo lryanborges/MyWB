@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_wb/constants/colors.dart';
-import 'package:my_wb/controllers/chatController.dart';
+import 'package:my_wb/controllers/chat_controller.dart';
 
 class MessageList extends StatelessWidget {
   final ChatController controller;

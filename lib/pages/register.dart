@@ -1,17 +1,17 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:my_wb/controllers/registerController.dart';
+import 'package:my_wb/controllers/register_controller.dart';
 
 import '../constants/colors.dart';
 
 class Register extends StatelessWidget {
-  final controller = Get.put(RegisterController());
+  const Register({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(RegisterController());
+    
     return Scaffold(
       backgroundColor: tdBG,
       body: SingleChildScrollView (

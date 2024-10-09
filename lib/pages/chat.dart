@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_wb/constants/colors.dart';
-import 'package:my_wb/controllers/chatController.dart';
-import 'package:my_wb/widgets/messageList.dart';
+import 'package:my_wb/controllers/chat_controller.dart';
+import 'package:my_wb/widgets/message_list.dart';
 
 class Chat extends StatelessWidget {
-  final controller = Get.put(ChatController());
+  const Chat({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ChatController());
+    
     return Scaffold(
       backgroundColor: tdBG,
       appBar: AppBar(
