@@ -79,16 +79,6 @@ class ProfileController extends GetxController{
             .getDownloadURL();
         }
 
-        if(firstUse) {
-          if(nameController.text.isEmpty  ||
-            weightController.text.isEmpty ||
-            heightController.text.isEmpty ||
-            sleepController.text.isEmpty) {
-              Get.snackbar('Aviso:', 'Preencha todas as opções!');
-              return;
-            }
-        }
-
         Map<String, dynamic> userData = {
           'nome': nameController.text,
           'peso': weightController.text,

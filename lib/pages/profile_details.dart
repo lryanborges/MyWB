@@ -23,16 +23,6 @@ class ProfileDetails extends StatelessWidget {
             fontSize: 18
           ),
         ),
-        leading: IconButton(
-          icon: const CircleAvatar(
-            backgroundColor: tdRed,
-            child: Icon(
-              Icons.close,
-              color: Colors.white,
-            ),
-          ),
-          onPressed: () => Get.toNamed('/profile'),
-        ),
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -262,7 +252,7 @@ class ProfileDetails extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        // TODO ação para o botão de cancelar
+                        Get.back();
                       },
                       child: const Text(
                         'Cancelar',
