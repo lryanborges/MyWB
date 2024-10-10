@@ -35,9 +35,13 @@ class MessageList extends StatelessWidget {
                   const SizedBox(width: 0,),
                   Container(
                     margin: const EdgeInsets.only(right: 8),
-                    child: const CircleAvatar(
+                    child: CircleAvatar(
                       radius: 16,
-                      backgroundImage: AssetImage('assets/images/pfp_6.jpg'),
+                      backgroundImage: controller.selectedImage.value != null
+                        ? FileImage(controller.selectedImage.value!)
+                        : const NetworkImage(
+                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRurO8kRj216kjoFZVmlyf2v2eak-uUfukQKQ&s'
+                        ) as ImageProvider,
                     ),
                   ),
                 ],
