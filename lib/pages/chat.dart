@@ -61,18 +61,39 @@ class Chat extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 8,),
-                  ElevatedButton(
-                    onPressed: () {
-                      controller.sendMessage(controller.messageController.text);
-                      controller.messageController.clear();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: const CircleBorder(),
-                      padding: const EdgeInsets.all(12),
-                      backgroundColor: tdButton
-                    ),
-                    child: const Icon(Icons.send, color: tdWhite, size: 20,),
-                  ),
+                  Obx(() {
+                    // Observa a variável currentMessage
+                    return GestureDetector(
+                      onLongPressStart: (_) {
+                        if (controller.currentMsg.value.isEmpty) {
+                          controller.startListening();
+                        }
+                      },
+                      onLongPressEnd: (_) {
+                        controller.stopListening();
+                      },
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (controller.currentMsg.value.isNotEmpty) {
+                            controller.sendMessage(controller.messageController.text);
+                            controller.messageController.clear();
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: const CircleBorder(),
+                          padding: const EdgeInsets.all(12),
+                          backgroundColor: tdButton
+                        ),
+                        child: Icon(
+                          controller.currentMsg.value.isEmpty
+                              ? Icons.mic
+                              : Icons.send,
+                          color: tdWhite, 
+                          size: 20,
+                        ),
+                      ),
+                    );
+                  }),
                 ],
               ),
             ),

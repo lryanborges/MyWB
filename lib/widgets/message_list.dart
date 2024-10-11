@@ -13,37 +13,50 @@ class MessageList extends StatelessWidget {
     return Obx(() => ListView.builder(
           itemCount: controller.messages.length,
           itemBuilder: (context, index) {
+            final message = controller.messages[index];
+            final bool isUser = message['sender'] == 'user';
+
             return Align(
-              alignment: Alignment.centerRight,
+              alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  if (!isUser) ...[
+                    const CircleAvatar(
+                      radius: 16,
+                      backgroundImage: NetworkImage(
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRurO8kRj216kjoFZVmlyf2v2eak-uUfukQKQ&s',
+                      ),
+                    ),
+                    const SizedBox(width: 0), // Espaçamento entre avatar e mensagem
+                  ],
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                        color: tdMessageContainer,
-                        borderRadius: BorderRadius.circular(15)),
+                      color: isUser ? tdContrastBlue : tdMessageContainer, // Cor diferente para mensagens do bot
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width * 0.7),
+                      maxWidth: MediaQuery.of(context).size.width * 0.7,
+                    ),
                     child: Text(
-                      controller.messages[index],
+                      message['text'],
                       style: const TextStyle(color: tdFontColor),
                     ),
                   ),
-                  const SizedBox(width: 0,),
-                  Container(
-                    margin: const EdgeInsets.only(right: 8),
-                    child: CircleAvatar(
+                  if (isUser) ...[
+                    const SizedBox(width: 0),
+                    CircleAvatar(
                       radius: 16,
                       backgroundImage: controller.selectedImage.value != null
-                        ? FileImage(controller.selectedImage.value!)
-                        : const NetworkImage(
-                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRurO8kRj216kjoFZVmlyf2v2eak-uUfukQKQ&s'
-                        ) as ImageProvider,
+                          ? FileImage(controller.selectedImage.value!)
+                          : const NetworkImage(
+                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRurO8kRj216kjoFZVmlyf2v2eak-uUfukQKQ&s',
+                            ) as ImageProvider,
                     ),
-                  ),
+                  ],
                 ],
               ),
             );

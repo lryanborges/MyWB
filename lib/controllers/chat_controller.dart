@@ -1,30 +1,113 @@
 import 'dart:io';
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
+
 import 'package:http/http.dart' as http;
+import 'package:speech_to_text/speech_to_text.dart' as stt;
+
+part '../constants/keys.dart';
 
 class ChatController extends GetxController {
-  final List<String> messages = <String>[].obs;
+  final List<Map<String, dynamic>> messages = <Map<String, dynamic>>[].obs;
   final messageController = TextEditingController();
+  final RxString currentMsg = ''.obs;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Rx<File?> selectedImage = Rx<File?>(null);
 
+  late stt.SpeechToText _speech;
+  RxBool isListening = false.obs;
+  RxString recognizedText = ''.obs;
+
+  final String apiKey = Keys.cohereKey;
+
   @override
   void onInit() {
     super.onInit();
+    messageController.addListener(() {
+      currentMsg.value = messageController.text;
+    });
+    _speech = stt.SpeechToText();
     _loadImage();
   }
 
-  void sendMessage(String message) {
+  Future<void> sendMessage(String message) async {
     if(message.isNotEmpty) {
-      messages.add(message);
+       messages.add({"text": message, "sender": "user"});
+
+      final response = await _getBotResponse(message);
+      if(response != null) {
+        messages.add({"text": response, "sender": "bot"});
+      }
+      else {
+        Get.snackbar("Erro", "Erro ao obter resposta do bot");
+      }
     }
+  }
+
+  Future<String?> _getBotResponse(String userInput) async {
+    const url = 'https://api.cohere.com/v2/chat'; // URL da API da Cohere
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer $apiKey',
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          'model': 'command-r', // Defina o modelo que deseja usar
+          'messages': [
+            {
+              'role':'user',
+              'content': userInput
+            }
+          ],
+          'stream':false
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final responseBody = utf8.decode(response.bodyBytes); // Decodificando a resposta
+        final data = jsonDecode(responseBody);
+        return data['message']['content'][0]['text'].trim(); // Resposta gerada pela Cohere
+      } else {
+        print('Erro na API: ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+      print('Erro ao chamar a API: $e');
+      return null;
+    }
+  }
+
+  Future<void> startListening() async {
+    bool available = await _speech.initialize(
+      onStatus: (val) => print('onStatus: $val'),
+      onError: (val) => print('onError: $val')
+    );
+
+    if(available) {
+      isListening.value = true;
+      _speech.listen(
+        onResult: (val) {
+          recognizedText.value = val.recognizedWords;
+          messageController.text = recognizedText.value;
+        }
+      );
+    }
+  }
+
+  void stopListening() {
+    _speech.stop();
+    isListening.value = false;
   }
 
   Future<void> _loadImage() async {
