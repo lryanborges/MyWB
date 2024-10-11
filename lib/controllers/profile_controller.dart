@@ -15,6 +15,11 @@ class ProfileController extends GetxController{
   TextEditingController heightController = TextEditingController();
   TextEditingController sleepController = TextEditingController();
 
+  RxString name = ''.obs;
+  RxString weight = ''.obs;
+  RxString height = ''.obs;
+  RxString sleep = ''.obs;
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -50,6 +55,11 @@ class ProfileController extends GetxController{
           selectedPersona.value = userData['wb_persona'];
           selectedObjective.value = userData['user_objective'];
           firstUse = userData['first_use'];
+
+          name.value = nameController.text;
+          weight.value = weightController.text;
+          height.value = heightController.text;
+          sleep.value = sleepController.text;
 
           String? profilePicUrl = userData['profile_pic_url'];
           if(profilePicUrl != null && profilePicUrl.isNotEmpty) {
@@ -93,6 +103,11 @@ class ProfileController extends GetxController{
         await _firestore.collection('users')
           .doc(uid)
           .set(userData, SetOptions(merge: true));
+
+        name.value = nameController.text;
+        weight.value = weightController.text;
+        height.value = heightController.text;
+        sleep.value = sleepController.text;
 
         Get.snackbar('Sucesso:', 'Dados salvos com sucesso!');
 

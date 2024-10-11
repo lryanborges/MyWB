@@ -10,9 +10,9 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProfileController());
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
-    final controller = Get.put(ProfileController());
 
     return Scaffold(
       backgroundColor: tdBG,
@@ -48,31 +48,31 @@ class Profile extends StatelessWidget {
             children: [
               const SizedBox(height: 30,),
               Center(
-                child: CircleAvatar(
+                child: Obx(() => CircleAvatar(
                   radius: 70,
                   backgroundImage: controller.selectedImage.value != null
                     ? FileImage(controller.selectedImage.value!)
                     : const NetworkImage(
                       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRurO8kRj216kjoFZVmlyf2v2eak-uUfukQKQ&s'
                     ) as ImageProvider,
-                ),
+                )),
               ),
               const SizedBox(height: 16,),
-              Text(
-                controller.nameController.text, 
+              Obx(() => Text(
+                controller.name.value, 
                 style: const TextStyle(
                   fontSize: 20, 
                   fontWeight: FontWeight.bold, 
                   color: tdFontColor
                 ),
-              ), 
+              )), 
               const SizedBox(height: 30,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildInfoContainer('Peso', '${controller.weightController.text}kg',screenWidth, 'weight'),
-                  _buildInfoContainer('Altura', '${controller.heightController.text}cm',screenWidth, 'height'),
-                  _buildInfoContainer('Sono', '${controller.sleepController.text}h',screenWidth, 'average-sleep')
+                  Obx(() => _buildInfoContainer('Peso', '${controller.weight.value}kg',screenWidth, 'weight')),
+                  Obx(() => _buildInfoContainer('Altura', '${controller.height.value}cm',screenWidth, 'height')),
+                  Obx(() => _buildInfoContainer('Sono', '${controller.sleep.value}h',screenWidth, 'average-sleep'))
                 ],
               ),
               const SizedBox(height: 24,),
