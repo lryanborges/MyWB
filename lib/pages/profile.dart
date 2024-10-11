@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:my_wb/constants/colors.dart';
 import 'package:my_wb/controllers/profile_controller.dart';
 import 'package:my_wb/widgets/bottom_navbar.dart';
+import 'package:my_wb/widgets/imc_chart.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -13,6 +14,12 @@ class Profile extends StatelessWidget {
     final controller = Get.put(ProfileController());
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
+
+    List<double> imcData = [
+      controller.calcularIMC(70.0, 1.71),
+      controller.calcularIMC(68.5, 1.71),
+      controller.calcularIMC(78.3, 1.71)
+    ];
 
     return Scaffold(
       backgroundColor: tdBG,
@@ -76,7 +83,7 @@ class Profile extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 24,),
-              _buildImageContainer('Suas estatisticas', 'assets/images/graph.png',screenWidth, screenHeight, 'statistics'),
+              _buildImageContainer('Suas estatisticas',screenWidth, screenHeight, imcData),
             ],
           ),
         ),
@@ -159,7 +166,7 @@ class Profile extends StatelessWidget {
 }
 
 
-  Widget _buildImageContainer(String label, String imagePath, double screenWidth, double screenHeight, String svgName) {
+  Widget _buildImageContainer(String label, double screenWidth, double screenHeight, List<double> imcData) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -167,7 +174,7 @@ class Profile extends StatelessWidget {
           children: [
             const SizedBox(width: 25.0),
             SvgPicture.asset(
-              'assets/icons/${svgName}.svg',
+              'assets/icons/statistics.svg',
               width: 32,
               height: 32,
               color: tdWhite,
@@ -183,11 +190,8 @@ class Profile extends StatelessWidget {
           decoration: BoxDecoration(
             color: tdContainer,
             borderRadius: BorderRadius.circular(4),
-            image: DecorationImage(
-              image: AssetImage(imagePath),
-              fit: BoxFit.none,
-            ),
           ),
+          child: IMCChart(imcData: imcData),
         ),
       ],
     );

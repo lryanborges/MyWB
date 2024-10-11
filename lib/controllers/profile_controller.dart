@@ -202,6 +202,10 @@ class ProfileController extends GetxController{
     return null;
   }
 
+  double calcularIMC(double peso, double altura) {
+    return peso / (altura * altura);
+  }
+
   void toggleEditing() {
     isEditing.value = !isEditing.value;
   }
