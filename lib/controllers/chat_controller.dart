@@ -17,6 +17,13 @@ class ChatController extends GetxController {
   final messageController = TextEditingController();
   final RxString currentMsg = ''.obs;
 
+  String weight = '';
+  String height = '';
+  String sleep = '';
+  String persona = '';
+  String objective = '';
+  bool firstChat = true;
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -31,23 +38,38 @@ class ChatController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    firstChat = true;
     messageController.addListener(() {
       currentMsg.value = messageController.text;
     });
     _speech = stt.SpeechToText();
-    _loadImage();
+    _loadData();
   }
 
   Future<void> sendMessage(String message) async {
     if(message.isNotEmpty) {
-       messages.add({"text": message, "sender": "user"});
+      messages.add({"text": message, "sender": "user"});
 
-      final response = await _getBotResponse(message);
-      if(response != null) {
-        messages.add({"text": response, "sender": "bot"});
+      if(firstChat) {
+        final msg = 'Considere as informações, porém não as comente durante a conversa elas são apenas dados para que utilize. Apenas responda mensagens relacionadas a saúde e seja SUCINTO nas respostas. Peso: $weight; Altura: $height; Sono: $sleep.Adote uma personalidade $persona e meu objetivo é de $objective.A partir daqui será onde você deverá começar a responder. $message';
+        firstChat = false;
+
+        final response = await _getBotResponse(msg);
+        if(response != null) {
+          messages.add({"text": response, "sender": "bot"});
+        }
+        else {
+          Get.snackbar("Erro", "Erro ao obter resposta do bot");
+        }
       }
       else {
-        Get.snackbar("Erro", "Erro ao obter resposta do bot");
+        final response = await _getBotResponse(message);
+        if(response != null) {
+          messages.add({"text": response, "sender": "bot"});
+        }
+        else {
+          Get.snackbar("Erro", "Erro ao obter resposta do bot");
+        }
       }
     }
   }
@@ -110,7 +132,7 @@ class ChatController extends GetxController {
     isListening.value = false;
   }
 
-  Future<void> _loadImage() async {
+  Future<void> _loadData() async {
     try {
       User? user = _auth.currentUser;
       if(user != null) {
@@ -120,6 +142,12 @@ class ChatController extends GetxController {
 
         if(userDoc.exists) {
           Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
+
+          weight = userData['peso'] ?? '';
+          height = userData['altura'] ?? '';
+          sleep = userData['sono'] ?? '';
+          persona = userData['wb_persona'];
+          objective = userData['user_objective'];
 
           String? profilePicUrl = userData['profile_pic_url'];
           if(profilePicUrl != null && profilePicUrl.isNotEmpty) {
