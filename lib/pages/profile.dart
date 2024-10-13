@@ -43,7 +43,7 @@ class Profile extends StatelessWidget {
               child: Icon(Icons.logout, color: Colors.white), // Ícone de logout
             ),
             onPressed: () {
-              // TODO deslogar
+              Get.toNamed('/login');
             },
           ),
         ],
