@@ -26,7 +26,7 @@ class MessageList extends StatelessWidget {
                     const CircleAvatar(
                       radius: 16,
                       backgroundImage: NetworkImage(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRurO8kRj216kjoFZVmlyf2v2eak-uUfukQKQ&s',
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVLDPl6fLluSt7-NAU8GGKeTnhbIDqirzmTA&s',
                       ),
                     ),
                     const SizedBox(width: 0), // Espaçamento entre avatar e mensagem
