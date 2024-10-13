@@ -11,7 +11,7 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ProfileController());
+    final controller = Get.put(ProfileController()); // control conexion
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
 
@@ -66,7 +66,7 @@ class Profile extends StatelessWidget {
               ),
               const SizedBox(height: 16,),
               Obx(() => Text(
-                controller.name.value, 
+                controller.userName.value,
                 style: const TextStyle(
                   fontSize: 20, 
                   fontWeight: FontWeight.bold, 
@@ -77,9 +77,9 @@ class Profile extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Obx(() => _buildInfoContainer('Peso', '${controller.weight.value}kg',screenWidth, 'weight')),
-                  Obx(() => _buildInfoContainer('Altura', '${controller.height.value}cm',screenWidth, 'height')),
-                  Obx(() => _buildInfoContainer('Sono', '${controller.sleep.value}h',screenWidth, 'average-sleep'))
+                  Obx(() => _buildInfoContainer('Peso', '${controller.userWeight.value}kg',screenWidth, 'weight')),
+                  Obx(() => _buildInfoContainer('Altura', '${controller.userHeight.value}cm',screenWidth, 'height')),
+                  Obx(() => _buildInfoContainer('Sono', '${controller.userSleep.value}h',screenWidth, 'average-sleep'))
                 ],
               ),
               const SizedBox(height: 24,),
