@@ -60,7 +60,7 @@ class Profile extends StatelessWidget {
                   backgroundImage: controller.selectedImage.value != null
                     ? FileImage(controller.selectedImage.value!)
                     : const NetworkImage(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRurO8kRj216kjoFZVmlyf2v2eak-uUfukQKQ&s'
+                      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
                     ) as ImageProvider,
                 )),
               ),
