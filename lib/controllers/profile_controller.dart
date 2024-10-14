@@ -15,10 +15,10 @@ class ProfileController extends GetxController{
   TextEditingController heightController = TextEditingController();
   TextEditingController sleepController = TextEditingController();
 
-  RxString name = ''.obs;
-  RxString weight = ''.obs;
-  RxString height = ''.obs;
-  RxString sleep = ''.obs;
+  RxString userName = ''.obs;
+  RxString userWeight = ''.obs;
+  RxString userHeight = ''.obs;
+  RxString userSleep = ''.obs;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -56,10 +56,10 @@ class ProfileController extends GetxController{
           selectedObjective.value = userData['user_objective'];
           firstUse = userData['first_use'];
 
-          name.value = nameController.text;
-          weight.value = weightController.text;
-          height.value = heightController.text;
-          sleep.value = sleepController.text;
+          userName.value = nameController.text;
+          userWeight.value = weightController.text;
+          userHeight.value = heightController.text;
+          userSleep.value = sleepController.text;
 
           String? profilePicUrl = userData['profile_pic_url'];
           if(profilePicUrl != null && profilePicUrl.isNotEmpty) {
@@ -104,10 +104,10 @@ class ProfileController extends GetxController{
           .doc(uid)
           .set(userData, SetOptions(merge: true));
 
-        name.value = nameController.text;
-        weight.value = weightController.text;
-        height.value = heightController.text;
-        sleep.value = sleepController.text;
+        userName.value = nameController.text;
+        userWeight.value = weightController.text;
+        userHeight.value = heightController.text;
+        userSleep.value = sleepController.text;
 
         Get.snackbar('Sucesso:', 'Dados salvos com sucesso!');
 
