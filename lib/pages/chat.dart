@@ -51,7 +51,7 @@ class Chat extends StatelessWidget {
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: controller.messageController,
+                      controller: controller.messagesController,
                       style: const TextStyle(color: tdFontColor),
                       decoration: InputDecoration(
                         hintText: 'Escreva para o WB',
@@ -75,8 +75,8 @@ class Chat extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {
                           if (controller.currentMsg.value.isNotEmpty) {
-                            controller.sendMessage(controller.messageController.text);
-                            controller.messageController.clear();
+                            controller.sendMessage(controller.messagesController.text);
+                            controller.messagesController.clear();
                           }
                         },
                         style: ElevatedButton.styleFrom(

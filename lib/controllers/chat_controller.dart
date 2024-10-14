@@ -14,7 +14,7 @@ part '../constants/keys.dart';
 
 class ChatController extends GetxController {
   final List<Map<String, dynamic>> messages = <Map<String, dynamic>>[].obs;
-  final messageController = TextEditingController();
+  final messagesController = TextEditingController();
   final RxString currentMsg = ''.obs;
 
   String weight = '';
@@ -30,17 +30,17 @@ class ChatController extends GetxController {
   Rx<File?> selectedImage = Rx<File?>(null);
 
   late stt.SpeechToText _speech;
-  RxBool isListening = false.obs;
+  RxBool chatIsListening = false.obs;
   RxString recognizedText = ''.obs;
 
-  final String apiKey = Keys.cohereKey;
+  final String speechApiKey = Keys.cohereKey;
 
   @override
   void onInit() {
     super.onInit();
     firstChat = true;
-    messageController.addListener(() {
-      currentMsg.value = messageController.text;
+    messagesController.addListener(() {
+      currentMsg.value = messagesController.text;
     });
     _speech = stt.SpeechToText();
     _loadData();
@@ -54,18 +54,18 @@ class ChatController extends GetxController {
         final msg = 'Considere as informações, porém não as comente durante a conversa elas são apenas dados para que utilize. Apenas responda mensagens relacionadas a saúde e seja SUCINTO nas respostas. Peso: $weight; Altura: $height; Sono: $sleep.Adote uma personalidade $persona e meu objetivo é de $objective.A partir daqui será onde você deverá começar a responder. $message';
         firstChat = false;
 
-        final response = await _getBotResponse(msg);
-        if(response != null) {
-          messages.add({"text": response, "sender": "bot"});
+        final botResponse = await _getBotResponse(msg);
+        if(botResponse != null) {
+          messages.add({"text": botResponse, "sender": "bot"});
         }
         else {
           Get.snackbar("Erro", "Erro ao obter resposta do bot");
         }
       }
       else {
-        final response = await _getBotResponse(message);
-        if(response != null) {
-          messages.add({"text": response, "sender": "bot"});
+        final botResponse = await _getBotResponse(message);
+        if(botResponse != null) {
+          messages.add({"text": botResponse, "sender": "bot"});
         }
         else {
           Get.snackbar("Erro", "Erro ao obter resposta do bot");
@@ -81,11 +81,11 @@ class ChatController extends GetxController {
       final response = await http.post(
         Uri.parse(url),
         headers: {
-          'Authorization': 'Bearer $apiKey',
+          'Authorization': 'Bearer $speechApiKey',
           'Content-Type': 'application/json',
         },
         body: json.encode({
-          'model': 'command-r', // Defina o modelo que deseja usar
+          'model': 'command-r', // define o modelo q a gente vai usar
           'messages': [
             {
               'role':'user',
@@ -97,9 +97,9 @@ class ChatController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        final responseBody = utf8.decode(response.bodyBytes); // Decodificando a resposta
+        final responseBody = utf8.decode(response.bodyBytes); // decodifica a resposta
         final data = jsonDecode(responseBody);
-        return data['message']['content'][0]['text'].trim(); // Resposta gerada pela Cohere
+        return data['message']['content'][0]['text'].trim(); // da resposta do Cohere
       } else {
         print('Erro na API: ${response.statusCode}');
         return null;
@@ -117,11 +117,11 @@ class ChatController extends GetxController {
     );
 
     if(available) {
-      isListening.value = true;
+      chatIsListening.value = true;
       _speech.listen(
         onResult: (val) {
           recognizedText.value = val.recognizedWords;
-          messageController.text = recognizedText.value;
+          messagesController.text = recognizedText.value;
         }
       );
     }
@@ -129,7 +129,7 @@ class ChatController extends GetxController {
 
   void stopListening() {
     _speech.stop();
-    isListening.value = false;
+    chatIsListening.value = false;
   }
 
   Future<void> _loadData() async {
@@ -171,7 +171,7 @@ class ChatController extends GetxController {
         final filePath = '${directory.path}/foto_perfil.png';
         final file = File(filePath);
         await file.writeAsBytes(response.bodyBytes);
-        return file; // Retornar o arquivo baixado
+        return file;
       }
     } catch (e) {
       Get.snackbar("Erro", "Erro ao baixar imagem: $e");
